@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(const MiApp());
+
+class MiApp extends StatelessWidget {
+  const MiApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'App con Error 404',
+      initialRoute: '/',
+
+      // Rutas conocidas
+      routes: {'/': (context) => const HomeScreen()},
+
+      // Se ejecuta SIEMPRE que se intente ir a una ruta que NO esté en 'routes'
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => const PaginaNoEncontradaScreen(),
+        );
+      },
+    );
+  }
+}
+
+// -------------------------------------------------------------
+// PANTALLA PRINCIPAL
+// -------------------------------------------------------------
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Inicio')),
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Ir a una ruta inexistente'),
+          onPressed: () {
+            // Intentamos ir a una ruta no definida en 'routes'
+            Navigator.pushNamed(context, '/ruta-que-no-existe');
+          },
+        ),
+      ),
+    );
+  }
+}
+
+// -------------------------------------------------------------
+// PANTALLA DE ERROR 404
+// -------------------------------------------------------------
+class PaginaNoEncontradaScreen extends StatelessWidget {
+  const PaginaNoEncontradaScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Error 404')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error_outline, size: 80, color: Colors.red),
+            const SizedBox(height: 16),
+            const Text(
+              '404 - Página no encontrada',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              child: const Text('Volver al Inicio'),
+              onPressed: () {
+                // Limpia el historial y vuelve a la pantalla inicial
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/',
+                  (route) => false,
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
