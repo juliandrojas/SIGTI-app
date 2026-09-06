@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   // 1. Definimos los colores principales de la app
-  static const Color primaryColor = Color(0xFF6200EE); // Morado principal
-  static const Color secondaryColor = Color(0xFF03DAC6);
+  static const Color primaryColor = Color(0xFF2596BE); // Morado principal
+  static const Color secondaryColor = Color(0xFFFF5A0F);
 
   // 2. Definimos el ThemeData global
   static ThemeData get lightTheme {
